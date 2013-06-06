@@ -46,6 +46,7 @@ public class IOSRunningApplication {
   }
 
   public AppleLocale setLanguage(String lang) {
+    // TODO freynaud if Safari rather than underlying app.
     if (underlyingApplication.getSupportedLanguages().isEmpty()) {
       return AppleLocale.emptyLocale(lang);
     }

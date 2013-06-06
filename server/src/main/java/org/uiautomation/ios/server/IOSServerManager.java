@@ -21,6 +21,7 @@ import org.uiautomation.ios.IOSCapabilities;
 import org.uiautomation.ios.server.application.APPIOSApplication;
 import org.uiautomation.ios.server.application.IOSRunningApplication;
 import org.uiautomation.ios.server.application.ResourceCache;
+import org.uiautomation.ios.server.application.SafariIPAApplication;
 import org.uiautomation.ios.server.configuration.Configuration;
 import org.libimobiledevice.binding.raw.DeviceInfo;
 
@@ -132,6 +133,11 @@ public class IOSServerManager {
 
   public IOSRunningApplication findAndCreateInstanceMatchingApplication(
       IOSCapabilities desiredCapabilities) {
+
+    if (desiredCapabilities.getBundleName().equals("Safari")){
+      return new SafariIPAApplication().createInstance(desiredCapabilities.getLanguage());
+    }
+
     for (APPIOSApplication app : getApplicationStore().getApplications()) {
       IOSCapabilities appCapabilities = app.getCapabilities();
       if (APPIOSApplication.canRun(desiredCapabilities, appCapabilities)) {

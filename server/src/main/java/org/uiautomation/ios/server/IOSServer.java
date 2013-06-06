@@ -155,6 +155,7 @@ public class IOSServer {
         safari = true;
         driver.addSupportedApplication(
             APPIOSApplication.findSafariLocation(driver.getHostInfo().getXCodeInstall(), s));
+
       }
     }
     if (safari) {

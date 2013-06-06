@@ -49,6 +49,11 @@ public class APPIOSApplication {
   private final File app;
   private final List<LanguageDictionary> dictionaries = new ArrayList<LanguageDictionary>();
 
+
+  protected APPIOSApplication(){
+    metadata=null;
+    app=null;
+  }
   /**
    * @param pathToApp
    * @throws WebDriverException

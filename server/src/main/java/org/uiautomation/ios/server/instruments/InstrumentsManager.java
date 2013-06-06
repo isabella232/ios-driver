@@ -95,7 +95,10 @@ public class InstrumentsManager {
       output = createTmpOutputFolder();
 
       this.application = application;
-      this.application.setDefaultDevice(deviceType);
+
+      if (capabilities.isSimulator()) {
+        this.application.setDefaultDevice(deviceType);
+      }
 
       deviceManager = prepareSimulator(capabilities);
       if (isWarmupRequired(sdkVersion)) {

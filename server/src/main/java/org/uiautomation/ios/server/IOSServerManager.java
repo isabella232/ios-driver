@@ -134,7 +134,7 @@ public class IOSServerManager {
   public IOSRunningApplication findAndCreateInstanceMatchingApplication(
       IOSCapabilities desiredCapabilities) {
 
-    if (desiredCapabilities.getBundleName().equals("Safari")){
+    if (desiredCapabilities.getBundleName().equals("Safari") && !desiredCapabilities.isSimulator()){
       return new SafariIPAApplication().createInstance(desiredCapabilities.getLanguage());
     }
 

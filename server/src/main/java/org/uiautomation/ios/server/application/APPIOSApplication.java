@@ -301,9 +301,9 @@ public class APPIOSApplication {
   }
 
   public void setDefaultDevice(DeviceType device) {
-
+    File plist = new File(app, "Info.plist");
     try {
-      File plist = new File(app, "Info.plist");
+
       NSDictionary root = (NSDictionary) BinaryPropertyListParser.parse(new FileInputStream(plist));
 
       NSArray devices = (NSArray) root.objectForKey("UIDeviceFamily");
@@ -332,7 +332,7 @@ public class APPIOSApplication {
       root.put("UIDeviceFamily", rearrangedArray);
       BinaryPropertyListWriter.write(plist, root);
     } catch (Exception e) {
-      throw new WebDriverException("Cannot change the default device for the app." + e.getMessage(),
+      throw new WebDriverException("Cannot change the default device for the app in "+plist.getAbsolutePath()+" , " + e.getMessage(),
                                    e);
     }
 

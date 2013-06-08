@@ -17,6 +17,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import org.openqa.selenium.remote.Response;
 import org.uiautomation.ios.IOSCapabilities;
+import org.uiautomation.ios.client.uiamodels.impl.NoOpNativeDriver;
 import org.uiautomation.ios.communication.WebDriverLikeRequest;
 import org.uiautomation.ios.server.IOSServerManager;
 import org.uiautomation.ios.server.ServerSideSession;
@@ -49,6 +50,12 @@ public class GetCapabilitiesNHandler extends UIAScriptHandler {
   @Override
   public Response handle() throws Exception {
     if (cachedResponse == null) {
+      // TODO freynaud create a specific handler for app without instruments ? is there any other app than
+      // safari for that ?
+      if (getDriver().getSession(getRequest().getSession())
+          .getNativeDriver() instanceof NoOpNativeDriver) {
+
+      }
       cachedResponse = super.handle();
     }
     return cachedResponse;
@@ -94,7 +101,7 @@ public class GetCapabilitiesNHandler extends UIAScriptHandler {
       o.put("javascriptEnabled", true);
       o.put("cssSelectors", true);
       o.put("takesElementScreenshot", false);
-      
+
       o.put(IOSCapabilities.SIMULATOR, true);
       o.put(IOSCapabilities.DEVICE, session.getCapabilities().getDevice());
       o.put(IOSCapabilities.VARIATION, session.getCapabilities().getDeviceVariation());

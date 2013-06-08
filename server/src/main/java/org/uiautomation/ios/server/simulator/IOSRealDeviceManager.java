@@ -103,7 +103,7 @@ public class IOSRealDeviceManager implements IOSDeviceManager {
 
   @Override
   public void resetContentAndSettings() {
-    d.emptyApplicationCache("com.ebay.iphone");
+    //d.emptyApplicationCache("com.ebay.iphone");
   }
 
   @Override

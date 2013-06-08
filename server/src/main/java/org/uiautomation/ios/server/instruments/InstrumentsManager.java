@@ -114,7 +114,7 @@ public class InstrumentsManager {
         log.fine("creating script");
       }
 
-      boolean safariReal = true;
+      boolean safariReal = device instanceof RealDevice && caps.getBundleName().equals("Safari");
       if (safariReal) {
         IOSDevice dev = IMobileDeviceFactory.INSTANCE.get(((RealDevice) device).getUuid());
         dev.startApp("com.apple.mobilesafari");

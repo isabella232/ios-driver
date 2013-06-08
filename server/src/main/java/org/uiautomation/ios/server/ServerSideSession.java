@@ -24,6 +24,7 @@ import org.uiautomation.ios.UIAModels.Session;
 import org.uiautomation.ios.UIAModels.configuration.CommandConfiguration;
 import org.uiautomation.ios.UIAModels.configuration.DriverConfiguration;
 import org.uiautomation.ios.UIAModels.configuration.WorkingMode;
+import org.uiautomation.ios.client.uiamodels.impl.NoOpNativeDriver;
 import org.uiautomation.ios.client.uiamodels.impl.RemoteIOSDriver;
 import org.uiautomation.ios.client.uiamodels.impl.ServerSideNativeDriver;
 import org.uiautomation.ios.communication.WebDriverLikeCommand;
@@ -234,8 +235,15 @@ public class ServerSideSession extends Session {
     } catch (Exception e) {
       e.printStackTrace();
     }
-    nativeDriver = new ServerSideNativeDriver(url, new SessionId(instruments.getSessionId()));
 
+    boolean realSafari = "Safari".equals(capabilities.getBundleName()) && !capabilities.isSimulator();
+    boolean nativeDriverAvailable = !realSafari;
+
+    if (nativeDriverAvailable == true){
+      nativeDriver = new ServerSideNativeDriver(url, new SessionId(instruments.getSessionId()));
+    }else {
+      nativeDriver = new NoOpNativeDriver();
+    }
     if ("Safari".equals(capabilities.getBundleName())) {
       setMode(WorkingMode.Web);
       getRemoteWebDriver().get("about:blank");
@@ -278,6 +286,9 @@ public class ServerSideSession extends Session {
 
   private void checkWebModeIsAvailable() {
     if (webDriver != null) {
+      return;
+    } else if (getNativeDriver() instanceof NoOpNativeDriver){
+      // instruments doesn't work. We can't check, and assume it works.
       return;
     } else {
       try {

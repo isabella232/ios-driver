@@ -240,7 +240,6 @@ public class ServerSideSession extends Session {
       setMode(WorkingMode.Web);
       getRemoteWebDriver().get("about:blank");
     }
-
   }
 
 

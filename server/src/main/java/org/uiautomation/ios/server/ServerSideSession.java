@@ -216,7 +216,7 @@ public class ServerSideSession extends Session {
   }
 
   public void start() {
-    //instruments.startSession(getSessionId(), application, device, capabilities);
+    instruments.startSession(getSessionId(), application, device, capabilities);
 
     // force stop session if running for too long
     final int sessionTimeoutMillis = options.getSessionTimeoutMillis();
@@ -247,8 +247,6 @@ public class ServerSideSession extends Session {
     if ("Safari".equals(capabilities.getBundleName())) {
       setMode(WorkingMode.Web);
       getRemoteWebDriver().get("about:blank");
-      //getRemoteWebDriver().get("http://ebay.co.uk");
-      //System.out.println("URL:"+getRemoteWebDriver().getCurrentUrl());
     }
   }
 

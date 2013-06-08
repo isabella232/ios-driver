@@ -216,7 +216,7 @@ public class ServerSideSession extends Session {
   }
 
   public void start() {
-    instruments.startSession(getSessionId(), application, device, capabilities);
+    //instruments.startSession(getSessionId(), application, device, capabilities);
 
     // force stop session if running for too long
     final int sessionTimeoutMillis = options.getSessionTimeoutMillis();
@@ -255,7 +255,7 @@ public class ServerSideSession extends Session {
     if (webDriver == null) {
       String version = capabilities.getSDKVersion();
       if (new IOSVersion(version).isGreaterOrEqualTo("6.0")) {
-        webDriver = new RemoteIOSWebDriver(this, new AlertDetector(nativeDriver));
+        webDriver = new RemoteIOSWebDriver(this /*,new AlertDetector(nativeDriver)*/);
       } else {
         log.warning("Cannot create a driver. Version too old " + version);
       }

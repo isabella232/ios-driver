@@ -247,6 +247,8 @@ public class ServerSideSession extends Session {
     if ("Safari".equals(capabilities.getBundleName())) {
       setMode(WorkingMode.Web);
       getRemoteWebDriver().get("about:blank");
+      //getRemoteWebDriver().get("http://ebay.co.uk");
+      //System.out.println("URL:"+getRemoteWebDriver().getCurrentUrl());
     }
   }
 

@@ -65,8 +65,10 @@ public class GetCapabilitiesNHandler extends UIAScriptHandler {
         map.put("browserVersion", "8536.25");
         map.put("CFBundleIdentifier","com.apple.mobilesafari");
         map.put("javascriptEnabled",true);
+        map.put(IOSCapabilities.DEVICE,"iphone");
         r.setValue(map);
         cachedResponse=r;
+        hasBeenDecorated=true;
       } else {
         cachedResponse = super.handle();
       }

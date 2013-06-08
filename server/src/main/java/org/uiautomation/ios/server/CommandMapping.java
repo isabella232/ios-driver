@@ -366,12 +366,12 @@ public enum CommandMapping {
       isNative = true;
     }
 
-    if (!request.getGenericCommand().isSessionLess()) {
+    /*if (!request.getGenericCommand().isSessionLess()) {
       ServerSideSession sss = driver.getSession(request.getSession());
       if (isNative && sss.getNativeDriver() instanceof NoOpNativeDriver) {
         throw new RuntimeException("\nWe have a problem\n");
       }
-    }
+    }*/
 
     if (clazz == null) {
       throw new RuntimeException("handler NI");

@@ -74,7 +74,9 @@ public class IOSServerManager {
     @Override
     public void onDeviceAdded(String uuid) {
       DeviceInfo d = new DeviceInfo(uuid);
-      devices.add(new RealDevice(d));
+      RealDevice de = new RealDevice(d);
+      log.info("device added  "+de.getUuid()+","+de.getName());
+      devices.add(de);
     }
 
     @Override

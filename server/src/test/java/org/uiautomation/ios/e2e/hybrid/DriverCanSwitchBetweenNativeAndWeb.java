@@ -73,12 +73,12 @@ public class DriverCanSwitchBetweenNativeAndWeb extends BaseIOSDriverTest {
 
   @Test
   public void canSwitchToTheWebViewAndFindByCSS() throws Exception {
-    IOSCapabilities safari = IOSCapabilities.iphone("UICatalog");
-    safari.setCapability(IOSCapabilities.TIME_HACK, false);
+    IOSCapabilities cap = IOSCapabilities.iphone("UICatalog");
+    cap.setCapability(IOSCapabilities.SIMULATOR,false);
 
     RemoteIOSDriver driver = null;
     try {
-      driver = new RemoteIOSDriver(getRemoteURL(), SampleApps.uiCatalogCap());
+      driver = new RemoteIOSDriver(getRemoteURL(), cap);
       Set<String> handles = driver.getWindowHandles();
       Assert.assertEquals(handles.size(), 1);
       UIAElement

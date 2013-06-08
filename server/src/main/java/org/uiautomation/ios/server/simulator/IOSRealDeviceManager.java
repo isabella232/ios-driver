@@ -97,8 +97,8 @@ public class IOSRealDeviceManager implements IOSDeviceManager {
 
   @Override
   public void setL10N(String locale, String language) {
-    d.setLockDownValue("com.apple.international", "Language", "en");
-    d.setLockDownValue("com.apple.international", "Locale", "en_GB");
+    //d.setLockDownValue("com.apple.international", "Language", "en");
+    //d.setLockDownValue("com.apple.international", "Locale", "en_GB");
   }
 
   @Override

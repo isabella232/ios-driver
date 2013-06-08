@@ -37,7 +37,7 @@ public abstract class BaseIOSDriverTest {
   }
 
   protected RemoteIOSDriver getDriver(IOSCapabilities cap){
-    boolean simulator = true;
+    boolean simulator = false;
     cap.setCapability(IOSCapabilities.SIMULATOR,simulator);
     driver = new RemoteIOSDriver(getRemoteURL(), cap);
     return driver;

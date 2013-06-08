@@ -16,6 +16,7 @@ package org.uiautomation.ios.server.command.uiautomation;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.openqa.selenium.remote.Response;
+import org.uiautomation.ios.client.uiamodels.impl.NoOpNativeDriver;
 import org.uiautomation.ios.communication.WebDriverLikeRequest;
 import org.uiautomation.ios.server.IOSServerManager;
 import org.uiautomation.ios.server.command.UIAScriptHandler;
@@ -28,9 +29,14 @@ public class StopSessionNHandler extends UIAScriptHandler {
   }
 
   public Response handle() throws Exception {
-    super.handle();
     String opaqueKey = getRequest().getSession();
-    getDriver().stop(opaqueKey);
+    if (getDriver().getSession(opaqueKey)
+        .getNativeDriver() instanceof NoOpNativeDriver) {
+      // safari real
+    } else {
+      super.handle();
+    }
+      getDriver().stop(opaqueKey);
 
     Response resp = new Response();
     resp.setSessionId(opaqueKey);

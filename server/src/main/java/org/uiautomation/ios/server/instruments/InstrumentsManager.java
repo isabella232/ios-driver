@@ -60,6 +60,7 @@ public class InstrumentsManager {
   private List<String> extraEnvtParams;
   private CommunicationChannel communicationChannel;
   private Command simulatorProcess;
+  private boolean safariReal;
 
   /**
    * constructor that will create an instrument process linked to the server.
@@ -114,7 +115,7 @@ public class InstrumentsManager {
         log.fine("creating script");
       }
 
-      boolean safariReal = device instanceof RealDevice && caps.getBundleName().equals("Safari");
+      safariReal = device instanceof RealDevice && caps.getBundleName().equals("Safari");
       if (safariReal) {
         IOSDevice dev = IMobileDeviceFactory.INSTANCE.get(((RealDevice) device).getUuid());
         dev.startApp("com.apple.mobilesafari");
@@ -153,6 +154,7 @@ public class InstrumentsManager {
       }
 
     } catch (Exception e) {
+      e.printStackTrace();
       if (simulatorProcess != null) {
         simulatorProcess.forceStop();
       }
@@ -273,6 +275,10 @@ public class InstrumentsManager {
   private void killSimulator() {
     if (deviceManager != null) {
       deviceManager.cleanupDevice();
+    }
+    if (safariReal) {
+      IOSDevice dev = IMobileDeviceFactory.INSTANCE.get(((RealDevice) device).getUuid());
+      dev.stopApp();
     }
   }
 

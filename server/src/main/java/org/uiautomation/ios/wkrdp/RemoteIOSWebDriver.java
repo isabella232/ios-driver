@@ -102,7 +102,8 @@ public class RemoteIOSWebDriver {
       if (!Configuration.BETA_FEATURE) {
         Configuration.off();
       }
-      protocol = new RealDeviceProtocolImpl(notification, finders);
+      String uuid = ((RealDevice) session.getDevice()).getUuid();
+      protocol = new RealDeviceProtocolImpl(uuid,notification, finders);
     } else {
       protocol = new SimulatorProtocolImpl(notification, finders);
     }

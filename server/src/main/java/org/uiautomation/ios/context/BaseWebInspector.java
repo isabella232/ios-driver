@@ -127,6 +127,11 @@ public abstract class BaseWebInspector implements MessageListener {
 
   public void get(String url) {
 
+    boolean hack = true;
+    if (hack){
+      url = url.replace("localhost","192.168.0.8");
+      System.out.println("new url :"+url);
+    }
     try {
       context.eventsLock().lock();
       JSONObject command = Page.navigate(url);

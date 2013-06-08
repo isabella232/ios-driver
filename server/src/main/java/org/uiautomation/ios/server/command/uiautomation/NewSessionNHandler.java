@@ -43,6 +43,7 @@ public class NewSessionNHandler extends BaseNativeCommandHandler {
       session.start();
 
       Response resp = new Response();
+      System.out.println("reply with new session : "+session.getSessionId());
       resp.setSessionId(session.getSessionId());
       resp.setStatus(0);
       resp.setValue("");

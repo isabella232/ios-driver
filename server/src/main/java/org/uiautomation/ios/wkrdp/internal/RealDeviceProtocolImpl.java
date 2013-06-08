@@ -30,59 +30,21 @@ import java.util.UUID;
 public class RealDeviceProtocolImpl extends WebKitRemoteDebugProtocol {
 
   private WebInspectorService inspector;
+  private final String uuid;
 
-  public RealDeviceProtocolImpl(MessageListener listener,
+  public RealDeviceProtocolImpl(String uuid,MessageListener listener,
                                 ResponseFinder... finders) {
     super(listener, finders);
-    IOSDevice d = IMobileDeviceFactory.INSTANCE.get("ff4827346ed6b54a98f51e69a261a140ae2bf6b3");
+    this.uuid = uuid;
+    IOSDevice d = IMobileDeviceFactory.INSTANCE.get(uuid);
     inspector = new WebInspectorService(d);
     start();
   }
 
-  public RealDeviceProtocolImpl(){
-    super(new MessageListener() {
-      @Override
-      public void onMessage(IOSMessage message) {
-        System.out.println(message);
-      }
-    });
-    IOSDevice d = IMobileDeviceFactory.INSTANCE.get("ff4827346ed6b54a98f51e69a261a140ae2bf6b3");
-    inspector = new WebInspectorService(d);
-    start();
-  }
-
-  public static void main(String[] args){
-    RealDeviceProtocolImpl r = new  RealDeviceProtocolImpl();
-  }
-
-
-  public static String key = UUID.randomUUID().toString();
   @Override
   public void start() {
     inspector.startWebInspector();
     startListenerThread();
-    //inspector.sendMessage(
-    /*sendMessage(
-        "<?xml version=\"1.0\" encoding=\"UTF-8\"?>" + "\n" +
-                          "<!DOCTYPE plist PUBLIC \"-//Apple//DTD PLIST 1.0//EN\" \"http://www.apple.com/DTDs/PropertyList-1.0.dtd\">"
-                          + "\n" +
-                          "<plist version=\"1.0\">" + "\n" +
-                          " <dict>" + "\n" +
-                          " <key>__argument</key>" + "\n" +
-                          " <dict>" + "\n" +
-                          " <key>WIRConnectionIdentifierKey</key>" + "\n" +
-                          //" <string>9128c1d9-069d-4751-b45b-bbcb6e7e8591</string>" + "\n" +
-                          " <string>"+ key+"</string>" + "\n" +
-                          " </dict>" + "\n" +
-                          " <key>__selector</key>" + "\n" +
-                          " <string>_rpc_reportIdentifier:</string>" + "\n" +
-                          " </dict>" + "\n" +
-                          "</plist>" + "\n");*/
-    /*try {
-      Thread.sleep(10000);
-    } catch (InterruptedException e) {
-      e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
-    }*/
   }
 
   @Override

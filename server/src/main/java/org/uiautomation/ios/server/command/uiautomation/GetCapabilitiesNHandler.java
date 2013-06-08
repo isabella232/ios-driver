@@ -50,7 +50,8 @@ public class GetCapabilitiesNHandler extends UIAScriptHandler {
 
   @Override
   public Response handle() throws Exception {
-    if (cachedResponse == null) {
+    boolean hack = true;
+    if (cachedResponse == null || hack) {
       // TODO freynaud create a specific handler for app without instruments ? is there any other app than
       // safari for that ?
       if (getDriver().getSession(getRequest().getSession())

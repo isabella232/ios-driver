@@ -24,6 +24,7 @@ import org.uiautomation.ios.server.ServerSideSession;
 import org.uiautomation.ios.server.command.PostHandleDecorator;
 import org.uiautomation.ios.server.command.UIAScriptHandler;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -54,9 +55,21 @@ public class GetCapabilitiesNHandler extends UIAScriptHandler {
       // safari for that ?
       if (getDriver().getSession(getRequest().getSession())
           .getNativeDriver() instanceof NoOpNativeDriver) {
-
+        Response r = new Response();
+        r.setSessionId(getRequest().getSession());
+        r.setState(null);
+        r.setStatus(0);
+        Map<String, Object> map = new HashMap<String, Object>();
+        map.put("takesScreenshot",false);
+        map.put("browserName", "Safari");
+        map.put("browserVersion", "8536.25");
+        map.put("CFBundleIdentifier","com.apple.mobilesafari");
+        map.put("javascriptEnabled",true);
+        r.setValue(map);
+        cachedResponse=r;
+      } else {
+        cachedResponse = super.handle();
       }
-      cachedResponse = super.handle();
     }
     return cachedResponse;
   }

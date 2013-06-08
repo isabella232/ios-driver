@@ -15,7 +15,6 @@
 package org.uiautomation.ios.wkrdp.internal;
 
 import org.libimobiledevice.binding.raw.IMobileDeviceFactory;
-import org.libimobiledevice.binding.raw.IMobileDeviceService;
 import org.libimobiledevice.binding.raw.IOSDevice;
 import org.libimobiledevice.binding.raw.WebInspectorService;
 import org.uiautomation.ios.wkrdp.MessageListener;

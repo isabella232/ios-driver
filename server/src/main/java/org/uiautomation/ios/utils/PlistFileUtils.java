@@ -20,8 +20,10 @@ import org.json.JSONObject;
 import org.openqa.selenium.WebDriverException;
 import org.uiautomation.iosdriver.ApplicationInfo;
 
-import java.io.File;
+import java.io.*;
+import java.util.HashMap;
 import java.util.Map;
+import java.util.StringTokenizer;
 
 public class PlistFileUtils {
 
@@ -30,7 +32,12 @@ public class PlistFileUtils {
 
   public PlistFileUtils(File source) {
     this.source = source;
-    this.plistContent = read(source);
+//    this.plistContent = read(source);
+    if(source.getPath().endsWith("es.lproj/Localizable.strings") || source.getPath().endsWith("en.lproj/Localizable.strings")){
+        this.plistContent = readByXoom(source); //Modified by Xoom
+    }else{
+        this.plistContent = read(source);
+    }
   }
 
 
@@ -49,4 +56,55 @@ public class PlistFileUtils {
     JSONObject res = new JSONObject(plistContent);
     return res;
   }
+
+    /**
+     * Added and used by Xoom for processing non-binary Localization.strings files.
+     * */
+    private Map<String, Object> readByXoom(File file){
+        Map<String, Object> fileContentMap=new HashMap<String, Object>();
+        BufferedReader br = null;
+
+        try {
+            br = new BufferedReader(new FileReader(file));
+            String line;
+            while ((line = br.readLine()) != null) {
+                this.processOneLineByXoom(line, fileContentMap);
+            }
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }finally {
+            try {
+                br.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
+        return fileContentMap;
+    }
+
+    private void processOneLineByXoom(String oneLine, Map<String, Object> fileContentMap){
+        String key = null, value = null;
+        StringTokenizer st=new StringTokenizer(oneLine, "\"");
+
+        int i=0;
+        while(st.hasMoreTokens()){
+            i++;
+            if(i==1){
+                key=st.nextToken();
+            }else if(i==3){
+                value=st.nextToken();
+            }else{
+                st.nextToken();
+            }
+        }
+
+        if(key==null || value==null){
+            throw new RuntimeException("Error proccessing Localization.strings file.");
+        }
+
+        fileContentMap.put(key, value);
+    }
 }

@@ -61,6 +61,16 @@ public class DemoXoom {
 
     }
 
+    @Test
+    public void testServerConnection() throws MalformedURLException, InterruptedException {
+        DesiredCapabilities cap = IOSCapabilities.iphone("XoomApp");
+        cap.setCapability("simulator", true);
+        RemoteWebDriver driver = new RemoteWebDriver(new URL("http://localhost:4444/wd/hub"), cap);
+        Thread.sleep(3000);
+        driver.quit();
+    }
+
+
     /**
      * BASIC:
      * 1) Start a session -->  for simulator

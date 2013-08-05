@@ -14,7 +14,6 @@
 package org.uiautomation.ios.server.command.uiautomation;
 
 import com.google.common.collect.ImmutableMap;
-
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.openqa.selenium.WebDriverException;
@@ -22,7 +21,6 @@ import org.openqa.selenium.remote.Response;
 import org.uiautomation.ios.communication.WebDriverLikeRequest;
 import org.uiautomation.ios.server.IOSServerManager;
 import org.uiautomation.ios.server.ServerSideSession;
-import org.uiautomation.ios.server.application.APPIOSApplication;
 import org.uiautomation.ios.server.application.IOSRunningApplication;
 import org.uiautomation.ios.server.command.PostHandleDecorator;
 import org.uiautomation.ios.server.command.UIAScriptHandler;
@@ -58,13 +56,24 @@ public class LogElementTreeNHandler extends UIAScriptHandler {
     }
 
     String js;
-    try {
+//    try {
+//      js = jsTemplate.replace(":sessionId", request.getSession())
+//          .replace(":attachScreenshot", "" + request.getPayload().getBoolean("attachScreenshot"))
+//          .replace(":reference", reference);
+//    } catch (JSONException e) {
+//      throw new WebDriverException("wrong params", e);
+//    }
+
+      boolean doesAttachScreenshot=false;
+      try{
+          doesAttachScreenshot=request.getPayload().getBoolean("attachScreenshot");
+      }catch(JSONException e){
+          //Do nothing here means accepting the default value of doesAttachScreenshot.
+      }
+
       js = jsTemplate.replace(":sessionId", request.getSession())
-          .replace(":attachScreenshot", "" + request.getPayload().getBoolean("attachScreenshot"))
-          .replace(":reference", reference);
-    } catch (JSONException e) {
-      throw new WebDriverException("wrong params", e);
-    }
+              .replace(":attachScreenshot", "" + doesAttachScreenshot)
+              .replace(":reference", reference);
 
     setJS(js);
 
